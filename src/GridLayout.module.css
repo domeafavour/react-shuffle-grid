@@ -1,0 +1,17 @@
+.gridLayout {
+  display              : grid;
+  grid-template-columns: repeat(3, 150px);
+  grid-row-gap         : 10px;
+  grid-column-gap      : 10px;
+}
+
+.gridItem {
+  display         : inline-flex;
+  width           : 150px;
+  height          : 150px;
+  align-items     : center;
+  justify-content : center;
+  border          : 1px solid #000;
+  box-sizing      : border-box;
+  background-color: yellowgreen;
+}
