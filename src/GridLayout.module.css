@@ -6,12 +6,13 @@
 }
 
 .gridItem {
-  display         : inline-flex;
-  width           : 150px;
-  height          : 150px;
-  align-items     : center;
-  justify-content : center;
-  border          : 1px solid #000;
-  box-sizing      : border-box;
-  background-color: yellowgreen;
+  display            : inline-flex;
+  width              : 120px;
+  height             : 150px;
+  align-items        : center;
+  justify-content    : center;
+  /* border             : 1px solid #000; */
+  box-sizing         : border-box;
+  /* background-color: yellowgreen; */
+  perspective        : 300px;
 }
