@@ -20,7 +20,7 @@ const GirdItem = React.memo(({ children, index, duration, stay }) => {
       domRef.current.style.transform = `translate(0, 0)`;
     }, duration + stay);
 
-  }, [index]);
+  }, [index, duration, stay]);
 
   const { x, y } = getPosition(index, cols);
 
