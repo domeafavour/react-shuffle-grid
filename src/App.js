@@ -3,6 +3,16 @@ import GridLayout, { GirdItem } from './GridLayout';
 import { shuffleArray } from './utils';
 import './App.css';
 
+const tick = (fn, times) => {
+  if (times <= 0) {
+    return;
+  }
+  setTimeout(() => {
+    fn(times);
+    tick(fn, times - 1);
+  }, 100);
+};
+
 const initialGrids = Array.from({ length: 9 }, (_, index) => ({ number: index + 1, flipped: false }));
 
 function App() {
@@ -12,13 +22,6 @@ function App() {
     setGrids(gs => shuffleArray(gs));
   }, []);
 
-  const toggleFlip = useCallback(() => {
-    setGrids(gs => gs.map(g => ({
-      ...g,
-      flipped: !g.flipped,
-    })));
-  }, []);
-
   const setFlipped = useCallback((index, isFlipped) => {
     setGrids(gs => gs.map((g, i) => {
       if (i === index) {
@@ -26,7 +29,18 @@ function App() {
       }
       return g;
     }));
-  }, []);
+  }, [setGrids]);
+
+  const toggleFlip = useCallback(() => {
+    const length = grids.length;
+
+    tick(times => {
+      const index = length - times;
+      setFlipped(index, !grids[index].flipped);
+    }, length);
+
+  }, [grids, setFlipped]);
+
 
   return (
     <div className="App">
@@ -39,6 +53,7 @@ function App() {
             stay={500}
             flipped={flipped}
             setFlipped={setFlipped}
+            delay={index * 300}
           >
             {number}
           </GirdItem>

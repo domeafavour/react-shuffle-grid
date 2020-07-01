@@ -5,7 +5,7 @@ import Card from './components/Card';
 
 const cols = 3;
 
-export const GirdItem = React.memo(({ children, index, duration, stay, setFlipped, flipped }) => {
+export const GirdItem = React.memo(({ children, index, duration, stay, flipped, setFlipped }) => {
   const domRef = useRef();
 
   useEffect(() => {
@@ -19,11 +19,13 @@ export const GirdItem = React.memo(({ children, index, duration, stay, setFlippe
 
     setTimeout(() => {
       domRef.current.style.transform = `translate(0, 0)`;
-    }, duration + stay);
+    }, duration + stay + Math.random() * 300 /** 添加随机时间，使卡片扩散开的时间不一样 */);
 
+  }, [index, duration, stay]);
+
+  useEffect(() => {
     setFlipped(index, false);
-
-  }, [index, duration, stay, setFlipped]);
+  }, [index, setFlipped]);
 
   const { x, y } = getPosition(index, cols);
 
