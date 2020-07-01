@@ -1,13 +1,12 @@
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styles from './GridLayout.module.css';
 import { getPosition } from './utils';
 import Card from './components/Card';
 
 const cols = 3;
 
-const GirdItem = React.memo(({ children, index, duration, stay }) => {
+export const GirdItem = React.memo(({ children, index, duration, stay, setFlipped, flipped }) => {
   const domRef = useRef();
-  const [flipped, setFlipped] = useState(false);
 
   useEffect(() => {
     const { x, y } = getPosition(index, cols);
@@ -22,21 +21,18 @@ const GirdItem = React.memo(({ children, index, duration, stay }) => {
       domRef.current.style.transform = `translate(0, 0)`;
     }, duration + stay);
 
-    setFlipped(false);
+    setFlipped(index, false);
 
-  }, [index, duration, stay]);
+  }, [index, duration, stay, setFlipped]);
 
   const { x, y } = getPosition(index, cols);
 
-  const toggleFlipped = useCallback(() => {
-    setFlipped(f => !f);
-  }, []);
 
   return (
     <div
       ref={domRef}
       className={styles.gridItem}
-      onClick={toggleFlipped}
+      onClick={() => setFlipped(index, !flipped)}
     >
       <Card
         front={(
@@ -52,19 +48,10 @@ const GirdItem = React.memo(({ children, index, duration, stay }) => {
   );
 });
 
-const GridLayout = ({ children, duration = 500, stay = 500 }) => {
+const GridLayout = ({ children }) => {
   return (
     <div className={styles.gridLayout}>
-      {React.Children.map(children, (number, index) => (
-        <GirdItem
-          key={number}
-          index={index}
-          duration={duration}
-          stay={stay}
-        >
-          {number}
-        </GirdItem>
-      ))}
+      {children}
     </div>
   );
 };
