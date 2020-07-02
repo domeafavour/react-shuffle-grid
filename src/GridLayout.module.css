@@ -11,8 +11,31 @@
   height             : 150px;
   align-items        : center;
   justify-content    : center;
-  /* border             : 1px solid #000; */
   box-sizing         : border-box;
-  /* background-color: yellowgreen; */
   perspective        : 300px;
+}
+
+@keyframes shufflingAnim {
+  0% {
+    left: 0;
+  }
+
+  25% {
+    left: -20px;
+  }
+
+  50% {
+    left: 20px;
+  }
+
+  to {
+    left: 0;
+  }
+}
+
+.shuffling {
+  position: relative;
+  animation-name: shufflingAnim;
+  animation-duration: 600ms;
+  animation-iteration-count: infinite;
 }

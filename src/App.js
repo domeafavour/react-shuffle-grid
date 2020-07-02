@@ -13,13 +13,17 @@ const tick = (fn, times) => {
   }, 100);
 };
 
-const initialGrids = Array.from({ length: 9 }, (_, index) => ({ number: index + 1, flipped: true }));
+const initialGrids = Array.from({ length: 9 }, (_, index) => ({ number: index + 1, flipped: true, shuffling: false }));
 
 function App() {
   const [grids, setGrids] = useState(initialGrids);
 
   const shuffle = useCallback(() => {
-    setGrids(gs => shuffleArray(gs));
+    setGrids(gs => shuffleArray(gs).map(g => ({ ...g, shuffling: true })));
+
+    setTimeout(() => {
+      setGrids(gs => gs.map(g => ({ ...g, shuffling: false })));
+    }, 3000);
   }, []);
 
   const setFlipped = useCallback((index, isFlipped) => {
@@ -63,15 +67,14 @@ function App() {
   return (
     <div className="App">
       <GridLayout>
-        {grids.map(({ number, flipped }, index) => (
+        {grids.map(({ number, flipped, shuffling }, index) => (
           <GirdItem
             index={index}
             key={number}
-            duration={300}
-            stay={500}
+            duration={800}
             flipped={flipped}
+            shuffling={shuffling}
             setFlipped={setFlipped}
-            delay={index * 300}
           >
             {number}
           </GirdItem>
