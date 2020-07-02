@@ -13,7 +13,7 @@ const tick = (fn, times) => {
   }, 100);
 };
 
-const initialGrids = Array.from({ length: 9 }, (_, index) => ({ number: index + 1, flipped: false }));
+const initialGrids = Array.from({ length: 9 }, (_, index) => ({ number: index + 1, flipped: true }));
 
 function App() {
   const [grids, setGrids] = useState(initialGrids);
@@ -41,6 +41,24 @@ function App() {
 
   }, [grids, setFlipped]);
 
+  const turnFrontAll = useCallback(() => {
+    const length = grids.length;
+
+    tick(times => {
+      const index = length - times;
+      setFlipped(index, false);
+    }, length);
+  }, [grids, setFlipped]);
+
+  const turnBackAll = useCallback(() => {
+    const length = grids.length;
+
+    tick(times => {
+      const index = length - times;
+      setFlipped(index, true);
+    }, length);
+
+  }, [grids, setFlipped]);
 
   return (
     <div className="App">
@@ -60,8 +78,10 @@ function App() {
         ))}
       </GridLayout>
       <div style={{ marginTop: 20 }}>
-        <button onClick={shuffle}>shuffle</button>
-        <button onClick={toggleFlip}>toggle flip all</button>
+        <button onClick={shuffle}>洗牌</button>
+        <button onClick={toggleFlip}>翻开/盖上</button>
+        <button onClick={turnFrontAll}>全部翻开</button>
+        <button onClick={turnBackAll}>全部盖上</button>
       </div>
     </div>
   );

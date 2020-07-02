@@ -24,7 +24,7 @@ export const GirdItem = React.memo(({ children, index, duration, stay, flipped, 
   }, [index, duration, stay]);
 
   useEffect(() => {
-    setFlipped(index, false);
+    setFlipped(index, true);
   }, [index, setFlipped]);
 
   const { x, y } = getPosition(index, cols);
